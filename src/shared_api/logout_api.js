@@ -4,7 +4,7 @@ export const logout_api = async () =>  {
 
     try {
         const res = await apiInstance.post(
-            '/api/logout/',
+            '/logout',
             {
                 headers: {
                   'Content-Type': 'application/json',

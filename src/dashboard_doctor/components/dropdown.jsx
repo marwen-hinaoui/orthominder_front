@@ -1,9 +1,12 @@
-import { Dropdown, message } from "antd";
+import { Dropdown } from "antd";
 import { logout_api } from "../../shared_api/logout_api";
 import { useNavigate, Link } from "react-router";
+import { useDispatch } from "react-redux";
+import { set_authenticated } from "../../redux-toolkit/slices/user_slice";
 
 const DropdownComponent = ({ children }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
 
 
@@ -12,8 +15,8 @@ const DropdownComponent = ({ children }) => {
 
     if (res.resData){
       
-      console.log('Logout success!')
-      navigate('/login')
+      navigate('/login', { replace: true })
+      dispatch(set_authenticated(false))
       
     }else{
       console.log('Logout error!')

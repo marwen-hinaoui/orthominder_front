@@ -1,27 +1,29 @@
-import { useSelector } from "react-redux"
+
 import apiInstance from "../../shared_api/axios"
-import { useRefreshAccessToken } from "../../shared_api/refresh"
+import { set_loading } from "../../redux-toolkit/slices/user_slice"
 
-export const get_doctor_dat = async (doctor_id) =>  {
-    const access_token = useSelector((state) => state.auth.tokenValue)
-    const refreshAccessToken = useRefreshAccessToken()
+export const get_doctor_data = async (refreshAccessToken, access_token, dispatch) => {
+    dispatch(set_loading(true))
 
+
+    
     try {
-        const res = await apiInstance.post(
-            `/api/get_doctor/${doctor_id}`,
-            {
-                headers: {
-                  'Authorization': `Bearer ${access_token}`,
-                },
-            }
+        const res = await apiInstance.get(
+            `/get_doctor`,
         )
-        if(res.status == 200)
-            return { resData: res.data, resError:null }
-    } catch (error) {
-        if(error.status === 401){
-
-            refreshAccessToken()
-            return {resData: null, resError:error}
+            dispatch(set_loading(false))
+        if (res.status === 200){
+            return res.data
         }
-    }    
+    } catch (error) {
+            dispatch(set_loading(false))
+        if (error.status === 401) {
+
+            await refreshAccessToken()
+            
+        }
+        return error
+    } finally {
+        dispatch(set_loading(false)) 
+    }
 }

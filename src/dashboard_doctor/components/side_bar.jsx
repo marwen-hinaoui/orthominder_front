@@ -1,25 +1,38 @@
-import { Layout, Menu, Typography } from "antd";
-import { AiOutlineHome, AiOutlineSetting, AiOutlineTeam, AiOutlineUser } from "react-icons/ai";
+import { Layout, Menu } from "antd";
+import { AiFillCalendar, AiFillDashboard } from "react-icons/ai";
 import dashboarStyle from '../dashboard_doctor.module.css';
 import { Link, useLocation } from "react-router";
+import SubMenu from "antd/es/menu/SubMenu";
+import { BsFillPersonFill, BsPeopleFill, BsPersonLinesFill } from "react-icons/bs";
 
 const { Sider } = Layout;
 const sidebar_data =[
   {
     key:'1',
-    icon: <AiOutlineHome className={dashboarStyle.iconStyle} />,
+    icon: <AiFillDashboard className={dashboarStyle.iconStyle} />,
     name:'Dashboard',
     route:'/doctor',
   },
   {
     key:'2',
-    icon: <AiOutlineTeam className={dashboarStyle.iconStyle} />,
+    icon: <BsPeopleFill className={dashboarStyle.iconStyle} />,
     name:'Patients',
     route:'/doctor/patients',
+
+    listPatient:{
+      name:'Patients List',
+      icon: <BsPersonLinesFill className={dashboarStyle.iconStyle} />,
+      route:'/doctor/patients',
+    },
+    addPatient:{
+      name:'New Appointement',
+      icon: <AiFillCalendar className={dashboarStyle.iconStyle} />,
+      route:'/doctor/patients/appointement',
+    }
   },
   {
     key:'3',
-    icon: <AiOutlineUser className={dashboarStyle.iconStyle} />,
+    icon: <BsFillPersonFill className={dashboarStyle.iconStyle}/>,
     name:'Profile',
     route:'/doctor/profile',
   },
@@ -47,22 +60,43 @@ const DashboardDoctorSidebar = () => {
       <Menu
         mode="inline"
         defaultSelectedKeys={[selectedKey]}
-        selectedKeys={[selectedKey]}
         style={{ borderRight: 0 }}
         className={dashboarStyle.textStyle}
       >
         {
-          sidebar_data.map((item, _) => (
-            <Menu.Item className={dashboarStyle.textStyle} key={item.key} icon={item.icon}>
-              <Link to={item.route} style={{ color: 'inherit' }} target="_self">
-                {item.name}
-              </Link>
-            </Menu.Item>
-          ))
+          sidebar_data.map((item, _) => {
+            if (item.name === "Patients") {
+              return (
+                <SubMenu
+                  key={item.key}
+                  icon={item.icon}
+                  title={
+                    <Link to={item.route} style={{ color: 'inherit' }}>
+                      {item.name}
+                    </Link>
+                  }
+                  className={dashboarStyle.textStyle}
+                >
+                  <Menu.Item key='sub1' icon={item.listPatient.icon}>
+                    <Link to={item.listPatient.route} style={{ color: 'inherit' }}>{item.listPatient.name}</Link>
+                  </Menu.Item>
+                  <Menu.Item key='sub2'  icon={item.addPatient.icon}>
+                    <Link to={item.addPatient.route} style={{ color: 'inherit' }}>{item.addPatient.name}</Link>
+                  </Menu.Item>
+                </SubMenu>
+              );
+            }
+
+            return (
+              <Menu.Item className={dashboarStyle.textStyle} key={item.key} icon={item.icon}>
+                <Link to={item.route} style={{ color: 'inherit' }} target="_self">
+                  {item.name}
+                </Link>
+              </Menu.Item>
+            );
+          })
         }
-        {/* <Menu.SubMenu key="sub2" icon={<AiOutlineSetting />} title="Utilities">
-          <Menu.Item key="4" icon={<AiOutlineSetting />}>Typography</Menu.Item>
-        </Menu.SubMenu> */}
+  
       </Menu>
     </Sider>
   );

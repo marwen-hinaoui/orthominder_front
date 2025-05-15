@@ -9,7 +9,7 @@
 }
 
 .iconStyle{
-    font-size: 19px !important;
+    font-size: 16px !important;
 }
 
 .textStyle{
@@ -30,12 +30,33 @@
     padding-right: 24px;
 }
 
-.doctorImg{
+.doctorImgHeader{
     background-image: url('../assets/img/doctor.png');
     width: 40px;
     height: 40px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    border-radius: '50%', 
+    border-radius: '50%';
+    cursor: pointer;
 }
+.profileImageCointainer{
+    width: 150px;
+    height: 150px;
+    border-radius: '50%';
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+
+.profilePageStyle{
+    background-image: url('../assets/img/doctor.png');
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+
+}
+

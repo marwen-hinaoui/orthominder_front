@@ -4,7 +4,7 @@ export const auth = async (userData) =>  {
 
     try {
         const res = await apiInstance.post(
-            '/api/login/',
+            '/doctor/login',
             userData,
             {
                 headers: {
@@ -16,6 +16,4 @@ export const auth = async (userData) =>  {
     } catch (error) {
         return {resData: null, resError:error}
     }
-
-    
 }
