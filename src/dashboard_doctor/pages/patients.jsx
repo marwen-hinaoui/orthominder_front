@@ -1,91 +1,108 @@
-import { useState } from 'react';
-import { Space, Table, Tag } from 'antd';
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
-import AddPatientModal from '../components/add_patient_modal';
+import { Space, Spin, Table, Tag, Empty } from 'antd'
+import AddPatientModal from '../components/add_patient_modal'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { get_all_patients } from '../doctor_api/get_all_patients'
+import { set_loading_page } from '../../redux-toolkit/slices/user_slice'
+import { FaLocationArrow, FaUserEdit } from 'react-icons/fa'
+import { MdDeleteForever } from 'react-icons/md'
+import { Link } from 'react-router'
 
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
+    title: 'Full name',
+    dataIndex: 'full_name',
+    key: 'full_name',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Phone Number',
+    dataIndex: 'phone_number',
+    key: 'phone_number',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: tags => (
-      <span>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ),
+    title: 'State',
+    dataIndex: 'state',
+    key: 'state',
+  },
+  {
+    title: 'City',
+    dataIndex: 'city',
+    key: 'city',
   },
   {
     title: 'Action',
     key: 'action',
     render: (_, record) => (
       <>
-      <Space size="middle">
-        <a><AiOutlineDelete color='#cf1322' size={16}  /></a>
-      </Space>
-      <Space size="middle">
-        <a><AiOutlineEdit size={16} style={{margin:'0 0 0 10px'}}/></a>
-      </Space>
+        <Space size="middle">
+          <a><FaUserEdit size={16} /></a>
+        </Space>
+        <Space size="middle">
+          <a><MdDeleteForever color='#cf1322' size={16} style={{ margin: '0 0 0 10px' }} /></a>
+        </Space>
+        <Space size="middle">
+          <Link to={`appointement/${record.id}`}>
+            <FaLocationArrow size={15} style={{ margin: '0 0 0 10px' }} />
+          </Link>
+        </Space>
       </>
     ),
   },
-];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  }
-];
+]
+
 const Patients = () => {
-  const [top, setTop] = useState('topLeft');
-  const [bottom, setBottom] = useState('bottomRight');
+  const dispatch = useDispatch()
+  const isLoadingPage = useSelector(state => state.auth.isLoadingPage)
+  const [patientsData, setPatientsData] = useState(null)
+  const [noData, setNoData] = useState(false)
+
+  useEffect(() => {
+    const getAllPatient = async () => {
+      dispatch(set_loading_page(true))
+      try {
+        const res = await get_all_patients()
+        if (res.resData && res.resData.data && res.resData.data.length > 0) {
+          setPatientsData(res.resData.data)
+        } else {
+          setNoData(true)
+        }
+      } catch (error) {
+        setNoData(true)
+      } finally {
+        dispatch(set_loading_page(false))
+      }
+    }
+    getAllPatient()
+  }, [patientsData])
+
+  if (patientsData) {
+    return (
+      <div>
+        <Table
+          columns={columns}
+          pagination={{ position: 'bottomRight' }}
+          dataSource={patientsData}
+          rowKey="id"
+        />
+        <AddPatientModal />
+      </div>
+    )
+  }
+
+  if (noData && !isLoadingPage) {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  }
+
   return (
-    <div>
-      <Table columns={columns} pagination={{ position: [bottom] }} dataSource={data} />
-      <AddPatientModal />
+    <div style={{ width: "100%", textAlign: "center" }}>
+      <Spin />
     </div>
-  );
-};
+  )
+}
+
 export default Patients

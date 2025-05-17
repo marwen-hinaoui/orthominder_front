@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Row, Col, Typography, Spin, Empty } from "antd";
 import { useRefreshAccessToken } from "../../shared_api/refresh"
 import { get_doctor_data } from "../doctor_api/get_doctor"
-import { AiTwotoneBank, AiTwotoneEnvironment, AiTwotoneIdcard, AiTwotoneMail } from "react-icons/ai";
+import { AiTwotoneBank, AiTwotoneEnvironment, AiTwotoneIdcard, AiTwotoneMail, AiTwotonePhone } from "react-icons/ai";
 import  profileStyle  from '../dashboard_doctor.module.css'
 
 
@@ -63,6 +63,14 @@ const ProfileDoctor = () => {
                     </Col>
                     <Col>
                         <Text>{doctor_data.email}</Text>
+                    </Col>
+                </Row>
+                <Row align="middle" gutter={[16, 16]} style={{ marginTop: 12 }}>
+                    <Col flex="none">
+                        <AiTwotonePhone style={{ fontSize: 16}} />
+                    </Col>
+                    <Col>
+                        <Text>{doctor_data.phone_number}</Text>
                     </Col>
                 </Row>
 

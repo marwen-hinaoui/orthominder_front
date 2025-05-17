@@ -1,34 +1,27 @@
+import apiInstance from "../../shared_api/axios";
 
-import apiInstance from "../../shared_api/axios"
-import { set_doctor_data, set_loading } from "../../redux-toolkit/slices/user_slice"
-
-export const create_patient = async () => {
-
+export const create_patient = async (useData) => {
     try {
-        const res = await apiInstance.get(
-            `/get_doctor`,
+        const res = await apiInstance.post(
+            '/patient/register',
+            useData,
             {
                 headers: {
-                    'Authorization': `Bearer ${access_token}`,
+                  'Content-Type': 'application/json',
                 },
-            }
+            }   
+
         )
-            console.log('try');
-            dispatch(set_loading(false))
-        if (res.status === 200){
-            return res.data
-        }
+        return { resData: res, resError:null }
+        
+        
+        
     } catch (error) {
-            console.log('catch');
-            dispatch(set_loading(false))
-        if (error.status === 401) {
+        console.log('====================================');
+        console.log(error);
+        console.log('====================================');
+        return { resData: null, resError: error }
 
-            await refreshAccessToken()
-
-        }
-        return error
-    } finally {
-        console.log('finally');
-        dispatch(set_loading(false)) 
+        
     }
 }

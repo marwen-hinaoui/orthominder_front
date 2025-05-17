@@ -3,7 +3,8 @@ import { AiFillCalendar, AiFillDashboard } from "react-icons/ai";
 import dashboarStyle from '../dashboard_doctor.module.css';
 import { Link, useLocation } from "react-router";
 import SubMenu from "antd/es/menu/SubMenu";
-import { BsFillPersonFill, BsPeopleFill, BsPersonLinesFill } from "react-icons/bs";
+import { BsFillPersonFill, BsPeopleFill } from "react-icons/bs";
+import { FaCalendarDays } from "react-icons/fa6";
 
 const { Sider } = Layout;
 const sidebar_data =[
@@ -18,20 +19,15 @@ const sidebar_data =[
     icon: <BsPeopleFill className={dashboarStyle.iconStyle} />,
     name:'Patients',
     route:'/doctor/patients',
-
-    listPatient:{
-      name:'Patients List',
-      icon: <BsPersonLinesFill className={dashboarStyle.iconStyle} />,
-      route:'/doctor/patients',
-    },
-    addPatient:{
-      name:'New Appointement',
-      icon: <AiFillCalendar className={dashboarStyle.iconStyle} />,
-      route:'/doctor/patients/appointement',
-    }
   },
   {
     key:'3',
+    icon: <FaCalendarDays className={dashboarStyle.iconStyle}/>,
+    name:'Appointements',
+    route:'/doctor/appointements',
+  },
+  {
+    key:'4',
     icon: <BsFillPersonFill className={dashboarStyle.iconStyle}/>,
     name:'Profile',
     route:'/doctor/profile',
@@ -65,27 +61,7 @@ const DashboardDoctorSidebar = () => {
       >
         {
           sidebar_data.map((item, _) => {
-            if (item.name === "Patients") {
-              return (
-                <SubMenu
-                  key={item.key}
-                  icon={item.icon}
-                  title={
-                    <Link to={item.route} style={{ color: 'inherit' }}>
-                      {item.name}
-                    </Link>
-                  }
-                  className={dashboarStyle.textStyle}
-                >
-                  <Menu.Item key='sub1' icon={item.listPatient.icon}>
-                    <Link to={item.listPatient.route} style={{ color: 'inherit' }}>{item.listPatient.name}</Link>
-                  </Menu.Item>
-                  <Menu.Item key='sub2'  icon={item.addPatient.icon}>
-                    <Link to={item.addPatient.route} style={{ color: 'inherit' }}>{item.addPatient.name}</Link>
-                  </Menu.Item>
-                </SubMenu>
-              );
-            }
+           
 
             return (
               <Menu.Item className={dashboarStyle.textStyle} key={item.key} icon={item.icon}>

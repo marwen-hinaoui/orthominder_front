@@ -8,6 +8,7 @@ import { set_loading, set_modal } from '../../redux-toolkit/slices/user_slice'
 import SharedButton from '../../components/button'
 import { create_patient } from '../doctor_api/create_patient'
 import { get_doctor_id } from '../doctor_api/get_doctor_id'
+import { FaCalendarPlus } from 'react-icons/fa'
 
 const inputErrorMsg = {
     email: "Please input your email!",
@@ -22,7 +23,7 @@ const inputErrorMsg = {
 
 
 
-const AddPatientModal = () => {
+const AddAppointementModal = () => {
     const isModalOpen = useSelector(state => state.auth.isModalOpen)
     const dispatch = useDispatch()
     const { message } = App.useApp()
@@ -87,9 +88,9 @@ const AddPatientModal = () => {
         }
     return (
         <div>
-            <FloatButton icon={<BsPersonPlusFill />} onClick={showModal} type="primary" style={{ insetInlineEnd: 24 }} />
+            <FloatButton icon={<FaCalendarPlus />} onClick={showModal} type="primary" style={{ insetInlineEnd: 24 }} />
             <Modal
-                title="Create Patient"
+                title="Create Appointement"
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={isModalOpen}
                 onCancel={handleCancel}
@@ -244,4 +245,4 @@ const AddPatientModal = () => {
     )
 }
 
-export default AddPatientModal
+export default AddAppointementModal
