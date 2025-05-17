@@ -1,12 +1,12 @@
-import { Layout, Menu } from "antd";
-import { AiFillCalendar, AiFillDashboard } from "react-icons/ai";
-import dashboarStyle from '../dashboard_doctor.module.css';
-import { Link, useLocation } from "react-router";
-import SubMenu from "antd/es/menu/SubMenu";
-import { BsFillPersonFill, BsPeopleFill } from "react-icons/bs";
-import { FaCalendarDays } from "react-icons/fa6";
+import { Layout, Menu } from "antd"
+import { AiFillCalendar, AiFillDashboard } from "react-icons/ai"
+import dashboarStyle from '../dashboard_doctor.module.css'
+import { Link, useLocation } from "react-router"
+import SubMenu from "antd/es/menu/SubMenu"
+import { BsFillPersonFill, BsPeopleFill } from "react-icons/bs"
+import { FaCalendarDays } from "react-icons/fa6"
 
-const { Sider } = Layout;
+const { Sider } = Layout
 const sidebar_data =[
   {
     key:'1',
@@ -20,23 +20,18 @@ const sidebar_data =[
     name:'Patients',
     route:'/doctor/patients',
   },
+
   {
     key:'3',
-    icon: <FaCalendarDays className={dashboarStyle.iconStyle}/>,
-    name:'Appointements',
-    route:'/doctor/appointements',
-  },
-  {
-    key:'4',
     icon: <BsFillPersonFill className={dashboarStyle.iconStyle}/>,
     name:'Profile',
     route:'/doctor/profile',
   },
-];
+]
 
 const DashboardDoctorSidebar = () => {
-    const location = useLocation();
-    const selectedKey = sidebar_data.find(item => location.pathname === item.route)?.key;
+    const location = useLocation()
+    const selectedKey = sidebar_data.find(item => location.pathname === item.route)?.key
 
   return (
     <Sider
@@ -69,13 +64,13 @@ const DashboardDoctorSidebar = () => {
                   {item.name}
                 </Link>
               </Menu.Item>
-            );
+            )
           })
         }
   
       </Menu>
     </Sider>
-  );
-};
+  )
+}
 
-export default DashboardDoctorSidebar;
+export default DashboardDoctorSidebar

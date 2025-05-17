@@ -1,9 +1,9 @@
-import { Spin, Table, Tag, Empty } from 'antd'
+import { Spin, Table, Tag, Empty, Typography } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { get_all_appointements } from '../doctor_api/get_all_appointements'
 import { set_loading_page } from '../../redux-toolkit/slices/user_slice'
-
+const { Text } = Typography
 const columns = [
   {
     title: 'ID',
@@ -54,7 +54,7 @@ const columns = [
   },
 ]
 
-const Appointements = () => {
+const TodaysAppointements = () => {
   const dispatch = useDispatch()
   const isLoadingPage = useSelector(state => state.auth.isLoadingPage)
   const [appointementssData, setAppointementssData] = useState(null)
@@ -82,7 +82,13 @@ const Appointements = () => {
   if (appointementssData) {
     return (
       <div>
+        
         <Table
+          title={()=> {
+            return(
+              <Text style={{fontWeight:'500'}}>Today's appointments</Text>
+            )
+          }}
           columns={columns}
           pagination={{ position: 'bottomRight' }}
           dataSource={appointementssData}
@@ -103,4 +109,4 @@ const Appointements = () => {
   )
 }
 
-export default Appointements
+export default TodaysAppointements

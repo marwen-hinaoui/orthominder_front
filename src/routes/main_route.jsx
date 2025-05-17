@@ -8,7 +8,6 @@ import { AuthProvider } from "../auth/auth_provider"
 import { ProtectedRoute } from "./protected_route"
 import HomeDashboardAdmin from "../dashboard_admin/pages/home"
 import Patients from "../dashboard_doctor/pages/patients"
-import Appointements from "../dashboard_doctor/pages/appointements"
 import PatientAppointementList from "../dashboard_doctor/pages/patient_appointement_list"
 import PatientAppointementDetails from "../dashboard_doctor/pages/patient_appointement_details"
 
@@ -37,25 +36,18 @@ const MainRoutes = ()=> {
                   <Patients />
                 </ProtectedRoute>}
               />
-              <Route path="patients/appointement/:id" element={
+              <Route path="patients/:id/appointement" element={
                 <ProtectedRoute>
                   <PatientAppointementList />
                 </ProtectedRoute>}
               />
-              <Route path="patients/appointement/:id/details/:appointement_id" element={
+              <Route path="patients/:id/appointement/:appointement_id/details" element={
                 <ProtectedRoute>
                   <PatientAppointementDetails />
                 </ProtectedRoute>}
               />
 
 
-
-
-              <Route path="appointements" element={
-                <ProtectedRoute>
-                  <Appointements />
-                </ProtectedRoute>}
-              />
               
               <Route path="profile" element={
                 <ProtectedRoute>

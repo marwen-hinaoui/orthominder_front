@@ -1,4 +1,4 @@
-import { Space, Spin, Table, Tag, Empty } from 'antd'
+import { Space, Spin, Table, Tag, Empty, Breadcrumb } from 'antd'
 import AddPatientModal from '../components/add_patient_modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -46,7 +46,7 @@ const columns = [
           <a><MdDeleteForever color='#cf1322' size={16} style={{ margin: '0 0 0 10px' }} /></a>
         </Space>
         <Space size="middle">
-          <Link to={`appointement/${record.id}`}>
+          <Link to={`${record.id}/appointement`}>
             <FaLocationArrow size={15} style={{ margin: '0 0 0 10px' }} />
           </Link>
         </Space>
@@ -83,6 +83,17 @@ const Patients = () => {
   if (patientsData) {
     return (
       <div>
+        <Breadcrumb
+          style={{ marginBottom: '18px' }}
+          items={[
+            {
+              title: '',
+            },
+            {
+              title: 'Patients',
+            },
+          ]}
+        />
         <Table
           columns={columns}
           pagination={{ position: 'bottomRight' }}
@@ -95,7 +106,12 @@ const Patients = () => {
   }
 
   if (noData && !isLoadingPage) {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    return (
+      <>
+        <AddPatientModal />
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      </>
+  )
   }
 
   return (

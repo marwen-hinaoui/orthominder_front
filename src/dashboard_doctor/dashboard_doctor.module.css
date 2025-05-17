@@ -60,3 +60,10 @@
 
 }
 
+.calendar_antd :global(.ant-card-body) {
+  padding: 0 !important;
+}
+
+
+
+

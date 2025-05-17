@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Row, Col, Typography, Spin, Empty } from "antd";
+import { Row, Col, Typography, Spin, Empty } from "antd"
 import { useRefreshAccessToken } from "../../shared_api/refresh"
 import { get_doctor_data } from "../doctor_api/get_doctor"
-import { AiTwotoneBank, AiTwotoneEnvironment, AiTwotoneIdcard, AiTwotoneMail, AiTwotonePhone } from "react-icons/ai";
+import { AiTwotoneBank, AiTwotoneEnvironment, AiTwotoneIdcard, AiTwotoneMail, AiTwotonePhone } from "react-icons/ai"
 import  profileStyle  from '../dashboard_doctor.module.css'
 
 
-const { Title, Text } = Typography;
+const { Title, Text } = Typography
 
 const ProfileDoctor = () => {
     const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const ProfileDoctor = () => {
     useEffect(() => {
         const fetch = async ()=>{
             const res = await get_doctor_data(refreshAccessToken, access_token, dispatch)
-            console.log(res);
+            console.log(res)
             setDoctorData(res)
         }
         fetch()

@@ -1,11 +1,12 @@
 import AddAppointementModal from '../components/add_appointement_modal'
-import { Space, Spin, Table, Tag, Empty } from 'antd'
+import { Space, Spin, Table, Tag, Empty, Breadcrumb } from 'antd'
 import { useEffect, useState } from 'react'
 import { set_loading_page } from '../../redux-toolkit/slices/user_slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { TbListDetails } from 'react-icons/tb'
 import { Link, useParams } from 'react-router'
 import { get_appointements_by_patient_id } from '../doctor_api/get_appointements_by_patient_id'
+import { MdDeleteForever, MdEditDocument } from 'react-icons/md'
 
 const columns = [
     {
@@ -24,6 +25,11 @@ const columns = [
         title: 'Appointemnt day',
         dataIndex: 'appointemnt_day',
         key: 'appointemnt_day',
+    },
+    {
+        title: 'Next appointemnt day',
+        dataIndex: 'next_appointemnt_day',
+        key: 'next_appointemnt_day',
     },
     {
         title: 'Is paid',
@@ -52,8 +58,14 @@ const columns = [
         key: 'action',
         render: (_, record) => (
             <Space size="middle">
-                <Link to={`details/${record.id}`}>
-                    <TbListDetails size={20} style={{ margin: '0 0 0 10px' }} />
+                <Link to={`${record.id}/details`}>
+                    <TbListDetails size={18}  />
+                </Link>
+                <Link to={`${record.id}/details`}>
+                    <MdEditDocument size={18}  />
+                </Link>
+                <Link >
+                    <MdDeleteForever color='#cf1322' size={18} />
                 </Link>
             </Space>
         ),
@@ -89,19 +101,36 @@ const PatientAppointementList = () => {
     if (appointementssData) {
         return (
             <div>
+                <Breadcrumb
+                          style={{ marginBottom: '18px' }}
+                          items={[
+                            {
+                              title: <Link to={'/doctor/patients'} replace={true}> Patients </Link>,
+                            },
+                            {
+                              title: `Patient appointements list`,
+                            },
+                          ]}
+                        />
                 <Table
                     columns={columns}
                     pagination={{ position: 'bottomRight' }}
                     dataSource={appointementssData}
                     rowKey="id"
                 />
-                <AddAppointementModal />
+                <AddAppointementModal id={id} />
             </div>
         )
     }
 
     if (noData && !isLoadingPage) {
-        return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        return (
+            <>
+                <AddAppointementModal id={id} />
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </>
+        )
+        
     }
 
     return (
