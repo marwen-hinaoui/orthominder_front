@@ -53,6 +53,23 @@ const DashboardDoctorSidebar = () => {
       collapsible
       collapsed={collapsed}
       onCollapse={toggleCollapsed}
+      trigger={
+        <div
+          style={{
+            background: "#fff",
+            textAlign: "center",
+            color:'#000',
+            cursor: "pointer",
+          }}
+        >
+          {collapsed ? (
+            <AiOutlineMenuUnfold size={20} />
+          ) : (
+            <AiOutlineMenuFold size={20} />
+          )}
+        </div>  
+
+      }
       style={{
         overflow: "auto",
         height: "100vh",
