@@ -11,6 +11,7 @@ const userAuthSlice = createSlice({
         doctor_data: {},
         isModalOpen: false,
         isLoadingPage: false,
+        isCollapsed: false,
     },
     reducers: {
         set_token: (state, action) => {
@@ -45,6 +46,9 @@ const userAuthSlice = createSlice({
         },
         set_loading_page: (state, action) => {
             state.isLoadingPage = action.payload
+        },
+        set_collapsed: (state, action) =>{
+            state.isCollapsed = action.payload
         }
     }
 })
@@ -60,6 +64,7 @@ export const {
     set_doctor_data,
     set_modal,
     set_loading_page,
+    set_collapsed,
 
     
 } = userAuthSlice.actions

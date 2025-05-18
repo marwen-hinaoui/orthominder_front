@@ -81,16 +81,15 @@ const TodaysAppointements = () => {
 
   if (appointementssData) {
     return (
-      <div>
-        
+      <div
+          style={{marginTop:'18px'}}
+      >
+         <Text style={{fontWeight:'500', fontSize:'18px'}}>Today's appointments</Text>
+
         <Table
-          title={()=> {
-            return(
-              <Text style={{fontWeight:'500'}}>Today's appointments</Text>
-            )
-          }}
           columns={columns}
           pagination={{ position: 'bottomRight' }}
+          style={{marginTop:'18px'}}
           dataSource={appointementssData}
           rowKey="id"
         />

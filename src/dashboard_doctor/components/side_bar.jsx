@@ -1,73 +1,90 @@
 import { Layout, Menu } from "antd"
-import { AiFillCalendar, AiFillDashboard } from "react-icons/ai"
-import dashboarStyle from '../dashboard_doctor.module.css'
-import { Link, useLocation } from "react-router"
-import SubMenu from "antd/es/menu/SubMenu"
+import {
+  AiFillDashboard,
+  AiOutlineMenuFold,
+  AiOutlineMenuUnfold,
+} from "react-icons/ai"
 import { BsFillPersonFill, BsPeopleFill } from "react-icons/bs"
-import { FaCalendarDays } from "react-icons/fa6"
+import { Link, useLocation } from "react-router"
+import dashboarStyle from "../dashboard_doctor.module.css"
+import { useDispatch, useSelector } from "react-redux"
+import { set_collapsed } from "../../redux-toolkit/slices/user_slice"
 
 const { Sider } = Layout
-const sidebar_data =[
-  {
-    key:'1',
-    icon: <AiFillDashboard className={dashboarStyle.iconStyle} />,
-    name:'Dashboard',
-    route:'/doctor',
-  },
-  {
-    key:'2',
-    icon: <BsPeopleFill className={dashboarStyle.iconStyle} />,
-    name:'Patients',
-    route:'/doctor/patients',
-  },
 
+const sidebar_data = [
   {
-    key:'3',
-    icon: <BsFillPersonFill className={dashboarStyle.iconStyle}/>,
-    name:'Profile',
-    route:'/doctor/profile',
+    key: "1",
+    icon: <AiFillDashboard className={dashboarStyle.iconStyle} />,
+    name: "Dashboard",
+    route: "/doctor",
+  },
+  {
+    key: "2",
+    icon: <BsPeopleFill className={dashboarStyle.iconStyle} />,
+    name: "Patients",
+    route: "/doctor/patients",
+  },
+  {
+    key: "3",
+    icon: <BsFillPersonFill className={dashboarStyle.iconStyle} />,
+    name: "Profile",
+    route: "/doctor/profile",
   },
 ]
 
 const DashboardDoctorSidebar = () => {
-    const location = useLocation()
-    const selectedKey = sidebar_data.find(item => location.pathname === item.route)?.key
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const collapsed = useSelector(state => state.auth.isCollapsed)
+  const selectedKey = sidebar_data.find(
+    (item) => location.pathname === item.route
+  )?.key
+
+  const toggleCollapsed = () => {
+      dispatch(set_collapsed(!collapsed))
+
+    }
+  
 
   return (
     <Sider
       width={250}
+      collapsible
+      collapsed={collapsed}
+      onCollapse={toggleCollapsed}
       style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'fixed',
-        zIndex:2,
+        overflow: "auto",
+        height: "100vh",
+        position: "fixed",
+        zIndex: 2,
         left: 0,
-        background: '#fff',
+        background: "#fff",
       }}
     >
-      <div style={{ padding: '24px 16px', textAlign: 'center' }}>
-        <div className={dashboarStyle.imgStyle}></div>
+      {/* Header with toggle button */}
+      <div style={{ padding: "16px", textAlign: "center", display:'flex', alignItems:'center' }}>
+        {!collapsed ? <div className={dashboarStyle.imgStyle} />: <div className={dashboarStyle.imgStyleCollapsed} />}
+        
       </div>
+
       <Menu
         mode="inline"
-        defaultSelectedKeys={[selectedKey]}
+        selectedKeys={[selectedKey]}
         style={{ borderRight: 0 }}
         className={dashboarStyle.textStyle}
       >
-        {
-          sidebar_data.map((item, _) => {
-           
-
-            return (
-              <Menu.Item className={dashboarStyle.textStyle} key={item.key} icon={item.icon}>
-                <Link to={item.route} style={{ color: 'inherit' }} target="_self">
-                  {item.name}
-                </Link>
-              </Menu.Item>
-            )
-          })
-        }
-  
+        {sidebar_data.map((item) => (
+          <Menu.Item
+            className={dashboarStyle.textStyle}
+            key={item.key}
+            icon={item.icon}
+          >
+            <Link to={item.route} style={{ color: "inherit" }}>
+              {item.name}
+            </Link>
+          </Menu.Item>
+        ))}
       </Menu>
     </Sider>
   )
