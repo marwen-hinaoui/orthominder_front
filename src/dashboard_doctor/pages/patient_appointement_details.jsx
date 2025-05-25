@@ -63,7 +63,7 @@ const PatientAppointmentDetails = () => {
               title: <Link to={'/doctor/patients'} replace={true}> Patients </Link>,
             },
             {
-              title: <Link to={`/doctor/patients/${patientData[0].id}/appointement`} >Patient appointements list</Link>,
+              title: <Link to={`/doctor/patients/${patientData?.id}/appointement`} >Patient appointements list</Link>,
             },
             {
               title:'Appointements details',
@@ -75,9 +75,9 @@ const PatientAppointmentDetails = () => {
 
                 <Col>
                     <Title level={4} style={{ margin: 0 }}>
-                        Mr {patientData[0].full_name}
+                        Mr {patientData?.full_name}
                     </Title>
-                    <Text type="secondary">Patient ID. # {patientData[0].id}</Text>
+                    <Text type="secondary">Patient ID. # {patientData?.id}</Text>
                 </Col>
             
 
@@ -87,7 +87,7 @@ const PatientAppointmentDetails = () => {
                         <AiTwotoneMail style={{ fontSize: 16}} />
                     </Col>
                     <Col>
-                        <Text>{patientData[0].email}</Text>
+                        <Text>{patientData?.email}</Text>
                     </Col>
                 </Row>
                 <Row align="middle" gutter={[16, 16]} style={{ marginTop: 12 }}>
@@ -95,7 +95,7 @@ const PatientAppointmentDetails = () => {
                         <AiTwotonePhone style={{ fontSize: 16}} />
                     </Col>
                     <Col>
-                        <Text>{patientData[0].phone_number} </Text>
+                        <Text>{patientData?.phone_number} </Text>
                     </Col>
                 </Row>
 
@@ -104,7 +104,7 @@ const PatientAppointmentDetails = () => {
                         <AiTwotoneBank style={{ fontSize: 16}} />
                     </Col>
                     <Col>
-                      <Text>{patientData[0].state} </Text>
+                      <Text>{patientData?.state} </Text>
                     </Col>
                 </Row>
                 <Row align="middle" gutter={[16, 16]} style={{ marginTop: 12 }}>
@@ -112,7 +112,7 @@ const PatientAppointmentDetails = () => {
                         <AiTwotoneEnvironment style={{ fontSize: 16}} />
                     </Col>
                     <Col>
-                      <Text>{patientData[0].patient_adress}, {patientData[0].city}</Text>
+                      <Text>{patientData?.patient_adress}, {patientData?.city}</Text>
 
                     </Col>
                 </Row>
@@ -122,7 +122,7 @@ const PatientAppointmentDetails = () => {
                         <AiTwotoneIdcard style={{ fontSize: 16}} />
                     </Col>
                     <Col>
-                      <Text>{patientData[0].zip_code} </Text>
+                      <Text>{patientData?.zip_code} </Text>
 
                     </Col>
                 </Row>
