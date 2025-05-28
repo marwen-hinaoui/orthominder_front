@@ -8,3 +8,4 @@ DASHBOARD
 
 ![Capture d'écran 2025-05-28 011346](https://github.com/user-attachments/assets/e56fbc68-9558-4f79-9f3e-ebad48c7d26e)
 
+![Capture d'écran 2025-05-28 011422](https://github.com/user-attachments/assets/37d1c043-989c-44bb-81ca-972ff21b7cc7)
